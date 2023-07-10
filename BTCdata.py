@@ -1,4 +1,4 @@
-f = open('BTC-USDT.csv')
+f = open('BTC-USD.csv')
 ff = f.readlines()
 of = open('BTC.txt','a')
 for i in range(len(ff)):

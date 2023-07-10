@@ -1,27 +1,46 @@
-                                    #CryptoDataDownload
-# First import the libraries that we need to use
+import numpy as np
 import pandas as pd
-import requests
-import json
+import matplotlib.pyplot as plt
 
-def fetch_daily_data(symbol):
-    pair_split = symbol.split('/')  # symbol must be in format XXX/XXX ie. BTC/EUR
-    symbol = pair_split[0] + '-' + pair_split[1]
-    url = f'https://api.pro.coinbase.com/products/{symbol}/candles?granularity=86400'
-    response = requests.get(url)
-    if response.status_code == 200:  # check to make sure the response from server is good
-        data = pd.DataFrame(json.loads(response.text), columns=['unix', 'low', 'high', 'open', 'close', 'volume'])
-        data['date'] = pd.to_datetime(data['unix'], unit='s')  # convert to a readable date
-        data['vol_fiat'] = data['volume'] * data['close']      # multiply the BTC volume by closing price to approximate fiat volume
-        if data is None:
-            print("Did not return any data from Coinbase for this symbol")
-        else:
-            data.to_csv(f'Coinbase_{pair_split[0] + pair_split[1]}_dailydata.csv', index=False)
-    else:
-        print("Did not receieve OK response from Coinbase API")
+def sim(history_price,ema12,ema26,buy,sold,info=False):
+  ema12i=ema12.iloc
+  ema26i=ema26.iloc
+  hpi=history_price.iloc
+  usd=100
+  btc=0
+  end=0
+  for i in range(len(history_price)):
+    if ema12i[i][0]>ema26i[i][0] and ema12i[i-1][0]<=ema26i[i-1][0]:
+      btc+=usd*buy/hpi[i][0]
+      usd*=1-buy
+    elif ema12i[i][0]<ema26i[i][0] and ema12i[i-1][0]>=ema26i[i-1][0]:
+      usd+=btc*sold\hpi[i][0]
+      btc*=1-sold
+    if not info:
+      print(usd,btc*hpi[i][0],i)
+  return usd+btc*hpi[-1][0]
+ 
+def draw(history_price, ema12, ema26):
+  plt.plot(history_price, label="Close Prices")
+  plt.plot(ema12, label="EMA12 Values")
+  plt.plot(ema26, label="EMA26 Values")
+  plt.xlabel("Days")
+  plt.ylabel("Price")
+  plt.legend()
+  plt.show()
+period = ['2023-01-01','2023-02-01','2023-03-01','2023-04-01','2023-05-01','2023-06-01','2023-07-01']
 
-
-if __name__ == "__main__":
-# we set which pair we want to retrieve data for
-    pair = "BTC/USD"
-    fetch_daily_data(symbol=pair)
+for ii in range(1):
+  #coin = yf.Ticker('BTC-USD')
+  #history_data = coin.history(start=period[ii],end=period[ii+1],interval='1d')
+  #history_price = history_data['Close']
+  df_csv = pd.read_csv('BTC-USD.csv')
+  history_price = pd.DataFrame({'Close':np.array(df_csv['Close'])}, index=np.array(df_csv['Start']))
+  history_price = history_price['2022-01-01':'2023-01-01']
+  print(history_price)
+  ema12 = history_price.ewm(alpha=2/13).mean()
+  ema26 = history_price.ewm(alpha=2/27).mean()
+  for i in range(1,11):
+      for j in range(1,11):
+          print(i/10,j/10,sim(history_price,ema12,ema26,i/10, j/10,info=True))
+  draw(history_price, ema12, ema26)
