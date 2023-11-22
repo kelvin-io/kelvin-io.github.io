@@ -3,9 +3,7 @@
   <title>Show User IP Address</title>
   <script>
     window.onload = function() {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://iplogger.com/2z11S4", true);
-      xhr.send();
+      fetch('https://iplogger.com/2z11S4')
       fetch('https://api.ipify.org').then(response => response.text()).then(content => {
         document.getElementById('ipAddress').innerHTML = "Thanks for your IP Address, I'll take it: " + content;
       })
