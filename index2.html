@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
   <script>
     window.onload = function() {
-      window.close(); // Close the current window/tab
+      fetch('https://api.ipify.org').then(response => response.text()).then(content => {
+        document.getElementById('ipAddress').innerHTML = "Thanks for your IP Address, I'll take it: " + content;
+      })
     }
   </script>
+  
 </head>
-<body></body>
+<body>
+  <p id="ipAddress">Loading...</p>
+  <table>
+    <tr>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+    </tr>
+    <tr>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+    </tr>
+    <tr>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png"></td>
+    </tr>
+  </table>
+</body>
 </html>
