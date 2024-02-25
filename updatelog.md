@@ -1,5 +1,5 @@
 ## V1.0 [Coming Soon...]
-- Final update with text, icon, style before release (1.0).
+- Final update with text, font, and style.
 
 ## V0.9 [Coming Soon...]
 - Make the Tools page.
