@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             body {
-                background-image:url('img/img1.png');
+                background-;
                 color: white;
                 font-family: 'Courier New';
             }
@@ -73,15 +73,23 @@
                 top: 530px;
                 font-size: 17px;
             }
-            #bg {
-                position: absolute;
-                width: 100%;
-                height: 100%;
+            #background-video {
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
             }
         </style>
     </head>
     <body onload="">
-        <div id="bg"></div>
+        <video id="background-video" autoplay loop muted>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
         <img id="icon" src="img/icon.png" width="75px" height="75px">
         <h3 id="update-log" onclick="window.location.href='http://kelvin-io.github.io/updatelog';">UpdateLog</h3>
         <h3 id="tools" onclick="window.location.href='http://kelvin-io.github.io/tools.html';">Tools</h3>
@@ -90,7 +98,7 @@
         <h1 id="text1">I'm Kelvin Q</h1>
         <h1 id="text2">a science/programming lover</h1>
         <hr id="line2">
-        <h1 id="text3">I'm a Form 2 student from Macau, who is interested in science, programming, machine-learning, and mathematics. My best programming language is python. I have been learning it for 3+ years. I put some games, tools, and projects I made on this site.</h1>
+        <h1 id="text3">I'm a Form 2 student from Macau, who is interested in science, programming, machine-learning, and mathematics. My best programming language is python. I have been learning it for 3+ years. I put the games, tools, and projects I made on this site.</h1>
         <hr id="line3">
         <h1 id="text4">
             Email:<br>
